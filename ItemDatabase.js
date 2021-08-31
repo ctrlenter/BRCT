@@ -7,6 +7,7 @@ class ItemDatabase{
     }
 
     AddItem(name, emojiId, emojiName, worth){
+        name = name.toLowerCase();
         if(!this.Items.has(name)){
             this.Items.set(name, {EmojiID: emojiId, EmojiName: emojiName, Worth: worth});
         }

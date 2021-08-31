@@ -5,6 +5,8 @@ class Inventory{
     }
 
     AddItem(itemName, count){
+        // console.log(itemName.toLowerCase());
+        itemName = itemName.toLowerCase();
         if(!this.Items.has(itemName)){
             this.Items.set(itemName, count);
         }else{

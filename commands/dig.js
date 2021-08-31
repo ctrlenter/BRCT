@@ -62,6 +62,7 @@ module.exports.run = (message, args, database, client) => {
 
             //generate item
             database.GetUser(message.author.id).then(userData => {
+                var msg = "";
                 var depth = userData.Depth;
                 var item = generateItem(depth);
                 console.log(item);
@@ -73,6 +74,14 @@ module.exports.run = (message, args, database, client) => {
                     amount = 2;
                 }
 
+                var gemChance = Math.floor(Math.random() * 100);
+                if(rand <= .1){
+                    msg +=  "Congratulations! You found a gem!";
+                    userData.increment('Gems', {
+                        by: 1
+                    })
+                }
+
                 inv.AddItem(item, amount);
     
                 data.LastDig = Date.now();
@@ -82,7 +91,7 @@ module.exports.run = (message, args, database, client) => {
                 data.Inventory = inv.ToBase64();
     
                 data.save();
-                message.reply(`You dug and found ${amount} piece(s) of ${item} ${client.itemDb.AsEmoji(item)}\nYou got 1 Exp`);
+                message.reply(`You dug and found ${amount} piece(s) of ${item} ${client.itemDb.AsEmoji(item)}\nYou got 1 Exp.\n${msg}`);
             })
 
         }else{

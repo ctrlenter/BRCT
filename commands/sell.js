@@ -12,7 +12,7 @@ module.exports.run = (message, args, database, client) => {
     if(args.length === 0) return message.reply("todo: some message to help a person?");
 
     if(args.length >= 2){
-        var item = args[0];
+        var item = args[0].toLowerCase();
         var amount = parseInt(args[1]);
         database.GetInventory(message.author.id).then(data => {
             console.log(data.Inventory);
@@ -26,7 +26,7 @@ module.exports.run = (message, args, database, client) => {
                     database.AddCoins(message.author.id, worth * amount);
                     inv.TakeItem(item, amount);
                     inv.Save(message.author.id, database);
-                    message.reply(`You sold ${amount} Stone ${client.itemDb.AsEmoji(item)} for ${worth * amount}`)
+                    message.reply(`You sold ${amount} ${item} ${client.itemDb.AsEmoji(item)} for ${worth * amount} coins`)
                 }
             }
             else {

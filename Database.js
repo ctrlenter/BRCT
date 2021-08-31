@@ -22,6 +22,10 @@ module.exports.User = sequelize.define('User', {
     Coins: {
         type: INTEGER,
         defaultValue: 100
+    },
+    Gems: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
     }
 });
 
