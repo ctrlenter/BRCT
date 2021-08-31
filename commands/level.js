@@ -13,3 +13,8 @@ module.exports.run = (message, args, database, client) => {
         message.reply(`Level: ${data.Level}\nExp: ${data.Exp}`);
     });
 }
+
+module.exports.info = {
+    name: "level",
+    alias: ["lvl"]
+}

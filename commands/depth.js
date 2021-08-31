@@ -22,3 +22,8 @@ module.exports.run = (message, args, database) => {
         message.reply(`Changed your depth to ${depth}`)
     })
 }
+
+module.exports.info = {
+    name: "changeDepth",
+    alias: []
+}

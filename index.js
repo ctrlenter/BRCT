@@ -30,13 +30,17 @@ Database.InitDataModels(sequelize, Sequelize);
 Database.LoadItemDatabase(client);
 
 client.commands = new Discord.Collection();
+client.aliases = new Discord.Collection();
+
 fs.readdir('./commands/', (err, files) => {
     if(err) return console.error(err);
     files.forEach(file => {
         if(!file.endsWith('.js')) return;
         let props = require(`./commands/${file}`);
-        let commandName = file.split('.')[0];
-        client.commands.set(commandName, props);
+        client.commands.set(props.info.name, props);
+        props.info.alias.forEach(alias => {
+            client.aliases.set(alias, props.info.name)
+        })
     })
 })
 
@@ -63,11 +67,26 @@ client.on('messageCreate', (message) => {
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 
-    const cmd = client.commands.get(command);
+    let cmd;
+
+    if(client.commands.has(command)) cmd = client.commands.get(command);
+
+    else if(client.aliases.has(command)) cmd = client.commands.get(client.aliases.get(command));
+
     if(!cmd) return;
+
     if(cmd.run){
+        if(cmd.info.ownerOnly){
+            console.log('owner only command');
+            if(message.author.id !== config.ownerId){
+                console.log('not owner!');
+                return;
+            } 
+        }
+
         cmd.run(message, args, Database, client);
     }
+
 });
 
 client.login(config.token);

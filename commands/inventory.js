@@ -19,3 +19,8 @@ module.exports.run = (message, args, database, client) => {
         message.reply(`Your inventory:\n${msg}`);
     })
 }
+
+module.exports.info = {
+    name: "inventory",
+    alias: ["inv"]
+}

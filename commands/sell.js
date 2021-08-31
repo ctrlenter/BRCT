@@ -26,7 +26,7 @@ module.exports.run = (message, args, database, client) => {
                     database.AddCoins(message.author.id, worth * amount);
                     inv.TakeItem(item, amount);
                     inv.Save(message.author.id, database);
-                    message.reply(`You sold ${amount} ${item} ${client.itemDb.AsEmoji(item)} for ${worth * amount} coins`)
+                    message.reply(`You sold ${amount} ${item} ${client.itemDb.AsEmoji(item)} for ${worth * amount} coins ${client.itemDb.Coin()}`)
                 }
             }
             else {
@@ -34,5 +34,9 @@ module.exports.run = (message, args, database, client) => {
             }
         });
     }
+}
 
+module.exports.info = {
+    name: "sell",
+    alias: []
 }

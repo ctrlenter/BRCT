@@ -22,5 +22,10 @@ module.exports.run = (message, args, database, client) => {
     database.LoadItemDatabase(client);
 
     message.reply(`Added Item ${name}, worth ${worth} to the list with emoji <:${name}:${emojiId}>`);
+}
 
+module.exports.info = {
+    name: "additem",
+    ownerOnly: true,
+    alias: []
 }

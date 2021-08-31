@@ -99,3 +99,8 @@ module.exports.run = (message, args, database, client) => {
         }
     })
 }
+
+module.exports.info = {
+    name: "dig",
+    alias: []
+}

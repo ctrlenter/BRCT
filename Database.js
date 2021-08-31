@@ -91,6 +91,44 @@ module.exports.ItemDatabase = sequelize.define('ItemDatabase', {
     updatedAt: false
 })
 
+module.exports.Forge = sequelize.define('Forge', {
+    DiscordID: {
+        type: DataTypes.BIGINT,
+    },
+    StartDate: {
+        type: DataTypes.BIGINT,
+        defaultValue: Date.now()
+    },
+    EndDate: {
+        type: DataTypes.BIGINT
+    },
+    Item: {
+        type: DataTypes.TEXT
+    },
+    Cost: {
+        type: DataTypes.TEXT
+    }
+},
+{
+    updatedAt: false,
+    tableName: 'Forge'
+})
+
+module.exports.InitDataModels = (sequelize, Sequelize) => {
+    this.User.sync({
+        alter: true
+    });
+    this.Diggy.sync({
+        alter: true
+    });
+    this.ItemDatabase.sync({
+        alter: true
+    }),
+    this.Forge.sync({
+        alter: true
+    })
+}
+
 module.exports.LoadItemDatabase = (client) =>{
     this.ItemDatabase.findAll({
         where: {
@@ -131,17 +169,7 @@ module.exports.AddCoins = (discordId, amount) => {
     })
 }
 
-module.exports.InitDataModels = (sequelize, Sequelize) => {
-    this.User.sync({
-        alter: true
-    });
-    this.Diggy.sync({
-        alter: true
-    });
-    this.ItemDatabase.sync({
-        alter: true
-    })
-}
+
 
 module.exports.CreateDeepUser = (discordId) => {
     this.CreateUser(discordId);

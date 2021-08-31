@@ -5,5 +5,6 @@ module.exports.run = (message, args, database) => {
 //TODO: use this for something, idk
 module.exports.info = {
     name: "test",
+    ownerOnly: true,
     alias: ["pog"]
 }

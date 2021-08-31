@@ -12,3 +12,8 @@ module.exports.run = (message, args, database) => {
         message.reply(`Level: ${data.Level}\nExp: ${data.Exp}/100\nTimes digged: ${data.TimesDigged}`);
     })
 }
+
+module.exports.info = {
+    name: "stats",
+    alias: ["stat"]
+}

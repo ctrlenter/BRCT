@@ -27,10 +27,18 @@ class ItemDatabase{
 
     AsEmoji(name){
         var emoji = "";
+        name = name.toLowerCase();
         if(this.Items.has(name)){
             var data = this.Items.get(name);
             emoji = `<:${data.EmojiName}:${data.EmojiID}>`;
         }
+        return emoji;
+    }
+
+    Coin(){
+        var emoji = "";
+        var data = this.Items.get('coin');
+        emoji = `<:${data.EmojiName}:${data.EmojiID}>`;
         return emoji;
     }
 
