@@ -51,25 +51,15 @@ module.exports.Diggy = sequelize.define('Diggy', {
     },
     Inventory: {
         type: DataTypes.TEXT
+    },
+    ForgeSlots: {
+        type: DataTypes.INTEGER,
+        defaultValue: 1
     }
-
 },
 {
     tableName: "Diggy"
 });
-
-module.exports.Forge = sequelize.define('Forge', {
-    DiscordID: {
-        type: DataTypes.BIGINT,
-        defaultValue: 0
-    },
-    Slot1: {
-        type: DataTypes.BIGINT,
-    },
-    Slot1DoneTime: {
-        type: DataTypes.BIGINT,
-    }
-})
 
 module.exports.ItemDatabase = sequelize.define('ItemDatabase', {
     Name: {
@@ -114,6 +104,21 @@ module.exports.Forge = sequelize.define('Forge', {
     tableName: 'Forge'
 })
 
+module.exports.ForgeRecipes = sequelize.define('ForgeRecipe', {
+    Item: {
+        type: DataTypes.TEXT
+    },
+    Cost: {
+        type: DataTypes.TEXT
+    },
+    ForgeTime: {
+        type: DataTypes.BIGINT
+    }
+},{
+    createdAt: false,
+    updatedAt: false
+})
+
 module.exports.InitDataModels = (sequelize, Sequelize) => {
     this.User.sync({
         alter: true
@@ -125,6 +130,9 @@ module.exports.InitDataModels = (sequelize, Sequelize) => {
         alter: true
     }),
     this.Forge.sync({
+        alter: true
+    })
+    this.ForgeRecipes.sync({
         alter: true
     })
 }
@@ -169,11 +177,13 @@ module.exports.AddCoins = (discordId, amount) => {
     })
 }
 
-
-
 module.exports.CreateDeepUser = (discordId) => {
     this.CreateUser(discordId);
     this.CreateDiggy(discordId);
+}
+
+module.exports.BeginForge = (discordId, item) => {
+
 }
 
 module.exports.CreateUser = (discordId) => {
