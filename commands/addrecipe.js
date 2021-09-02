@@ -17,9 +17,15 @@ module.exports.run = (message, args, database, client) => {
     if(args.length === 0)
         return message.reply(`Wrong length of arguments.\nUsage: !addrecipe <type> [...args]`);
     
-    let recipeType = args[0];
-    if(recipeType === 'forge'){
-        //get 
+    if(args.length >= 4){
+        let recipeType = args[0];
+        if(recipeType === 'forge'){
+            var item = args[1]; // in json
+            var cost = args[2]; // in json
+            var forgeTime = args[3]; // the seconds it takes to forge something
+            database.AddForceRecipe(item, cost, forgeTime);
+            message.reply('Should have added recipe?');
+        }
     }
 
 }

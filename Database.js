@@ -138,6 +138,7 @@ module.exports.InitDataModels = (sequelize, Sequelize) => {
 }
 
 module.exports.LoadItemDatabase = (client) =>{
+    var itemDb = new ItemDatabase();
     this.ItemDatabase.findAll({
         where: {
             Name: {
@@ -145,12 +146,23 @@ module.exports.LoadItemDatabase = (client) =>{
             }
         }
     }).then(data => {
-        var itemDb = new ItemDatabase();
         data.forEach(model => {
             itemDb.AddItem(model.Name, model.EmojiID, model.EmojiName, model.Worth);
         })
-        client.itemDb = itemDb;
     });
+
+    this.ForgeRecipes.findAll({
+        where: {
+            Item: {
+                [Op.not]: null
+            }
+        }
+    }).then(data => {
+        data.forEach(model => {
+            //TODO: Add and decode the json. Add to the itemdb
+        })
+    })
+    client.itemDb = itemDb;
 }
 
 module.exports.GetInventory = (discordId) => {
@@ -217,6 +229,18 @@ module.exports.DecodeInventory = (inventory) => {
     }
 
     return inv;
+}
+
+module.exports.AddForceRecipe = (item, cost, forgeTime) => {
+    this.ForgeRecipes.create({Item: item, Cost: cost, ForgeTime: forgeTime});
+};
+
+module.exports.GetActiveForges = (discordId) => {
+    return this.Forge.count({
+        where: {
+            DiscordID: discordId
+        }
+    })
 }
 
 /**
