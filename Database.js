@@ -159,7 +159,7 @@ module.exports.LoadItemDatabase = (client) =>{
         }
     }).then(data => {
         data.forEach(model => {
-            //TODO: Add and decode the json. Add to the itemdb
+            //TODO: Add and decode the json. Add to the itemdb  
         })
     })
     client.itemDb = itemDb;
@@ -262,7 +262,6 @@ module.exports.CreateDiggy = (discordId) => {
 /**
  * 
  * @param {*} discordId 
- * @returns {Diggy}
  */
 module.exports.GetDiggy = (discordId) => {
 

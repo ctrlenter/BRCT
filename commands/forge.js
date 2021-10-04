@@ -10,24 +10,25 @@ const Database = require('../Database');
  */
 module.exports.run = (message, args, database, client) => {
     //get forge count for the current user
-    if(args.length === 0) return message.reply(`Usage: !forge <itemname>`);
+    var id = message.author.id;
+    if(args.length === 0) return message.reply(`Usage: !forge <list:add> <itemname>`);
     if(args.length >= 1){
-        var subcommand = args[1];
+        var subcommand = args[0];
+        console.log(`Length: ${args.length}`);
+        console.log(`sub command: ${subcommand}`)
         if(subcommand == "list"){
             //todo: list active forges
         }
         else if(subcommand == "add"){
-            if(args.length >= 2){
-                database.GetDiggy(message.author.id).then(data =>{
-                    database.GetActiveForges(message.author.id).then(count => {
-                        if(count < data.ForgeSlots){
-                            //means there's a space. lets create it!
-                            var item = args[2];
-                            message.reply(item);
-                        }
-                    });
-                })
-            }
+            database.GetDiggy(id).then(data => {
+                database.GetActiveForges(id).then(forgeCount => {
+                    if(forgeCount < data.ForgeSlots){
+                        //Hooray! We have space
+                        var item = args[1];
+                        message.reply(`Hooray! We have space for ${item}`);
+                    }
+                });
+            })
         }
     }
 }
